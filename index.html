@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Em có muốn nhận quà?</title>
+</head>
+<body>
+<div class="centered">
+  <h4>Em có muốn nhận quà?</h4>
+
+  <!-- Thêm phần đếm số -->
+  <div id="counter">Số đếm: 0</div>
+  
+  <!-- Trò chơi đoán số -->
+  <div>
+    <h5>Đoán số từ 1 đến 10</h5>
+    <input type="number" id="guess" min="1" max="10" placeholder=""/>
+    <button onclick="checkGuess()">Đoán</button>
+    <p id="message"></p>
+  </div>
+
+  <div id="gift" style="display: none;">
+    <input class="no" id="No" type="checkbox" name="answer"/>
+    <label class="no" for="No">Bé không muốn quà</label>
+    <input class="yes" id="Yes" type="checkbox" name="answer"/>
+    <label class="yes" for="Yes">QUà em đây bé</label>
+    <div class="answer--yes"></div>
+    <div class="answer--no"></div>
+  </div>
+
+</div>
+
+<script>
+// Trò đếm số
+let count = 0;
+const counterElement = document.getElementById('counter');
+
+// Hàm tăng số lên mỗi giây
+function startCounting() {
+  setInterval(function() {
+    count++;
+    counterElement.innerText = `Thời gian: ${count}`;
+  }, 1000); // Tăng số mỗi giây
+}
+
+// Bắt đầu đếm khi trang được tải
+startCounting();
+
+// Trò chơi đoán số
+const correctNumber = Math.floor(Math.random() * 10) + 1; // Số ngẫu nhiên từ 1 đến 10
+
+function checkGuess() {
+  const userGuess = parseInt(document.getElementById("guess").value);
+  const messageElement = document.getElementById("message");
+
+  if (userGuess === correctNumber) {
+    messageElement.textContent = "Chúc mừng! Em thật thông minh!";
+    document.getElementById("gift").style.display = "block"; // Hiển thị quà
+  } else {
+    messageElement.textContent = "Sai rồi! Hãy thử lại!";
+  }
+}
+
+</script>
+
+<style type="text/css">
+body {
+  background: radial-gradient(
+    circle closest-side at 60% 43%,
+    #323232 26%,
+    rgba(187, 0, 51, 0) 27%
+  ),
+  radial-gradient(
+    circle closest-side at 40% 43%,
+    #323232 26%,
+    rgba(187, 0, 51, 0) 27%
+  ),
+  radial-gradient(
+    circle closest-side at 40% 22%,
+    #373737 45%,
+    rgba(221, 51, 85, 0) 46%
+  ),
+  radial-gradient(
+    circle closest-side at 60% 22%,
+    #373737 45%,
+    rgba(221, 51, 85, 0) 46%
+  ),
+  radial-gradient(
+    circle closest-side at 50% 35%,
+    #373737 30%,
+    rgba(221, 51, 85, 0) 31%
+  ),
+  radial-gradient(
+    circle closest-side at 60% 43%,
+    #323232 26%,
+    rgba(187, 0, 51, 0) 27%
+  )
+  50px 50px,
+  radial-gradient(
+    circle closest-side at 40% 43%,
+    #323232 26%,
+    rgba(187, 0, 51, 0) 27%
+  )
+  50px 50px,
+  radial-gradient(
+    circle closest-side at 40% 22%,
+    #3c3c3c 45%,
+    rgba(221, 51, 85, 0) 46%
+  )
+  50px 50px,
+  radial-gradient(
+    circle closest-side at 60% 22%,
+    #3c3c3c 45%,
+    rgba(221, 51, 85, 0) 46%
+  )
+  50px 50px,
+  radial-gradient(
+    circle closest-side at 50% 35%,
+    #3c3c3c 30%,
+    rgba(221, 51, 85, 0) 31%
+  )
+  50px 50px;
+  background-color: #323232;
+  background-size: 100px 100px;
+  font-family: "Lato", sans-serif;
+}
+.centered {
+  width: 100%;
+  margin: 30vh auto;
+  text-align: center;
+}
+.centered h4 {
+  color: #ffffff;
+  font-size: 3em;
+  font-weight: bold;
+}
+#counter {
+  color: white;
+  font-size: 2em;
+  margin-top: 20px;
+}
+input[type="number"] {
+  padding: 10px;
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+button {
+  padding: 10px 20px;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-top: 10px;
+}
+#message {
+  color: white;
+  font-size: 1.5em;
+  margin-top: 10px;
+}
+#gift {
+  margin-top: 20px;
+}
+input[type="checkbox"] {
+  display: none;
+}
+label {
+  height: 40px;
+  width: auto;
+  padding: 10px 40px;
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 20px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-size: 1.5em;
+  line-height: 1.5em;
+  text-transform: uppercase;
+  transition: all 0.25s ease-in-out;
+}
+label:hover {
+  transform: scale(1.1, 1.1);
+}
+.no {
+  background-color: #d8124b;
+  margin-bottom: 10px;
+}
+.yes {
+  background-color: #12d890;
+}
+.answer--yes,
+.answer--no {
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 9;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+.answer--yes {
+  background-image: url("https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2N3Mmt5NjBueDYxcTh6ZmVrZXFzMDF5c2F5dWR3bTY2M21sbWhiaiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/13CoXDiaCcCoyk/giphy.gif");
+  background-repeat: repeat;
+  background-size: contain;
+}
+.answer--no {
+  background-image: url("https://media.giphy.com/media/QBEhpJHrv7poQ/giphy.gif");
+  background-repeat: repeat;
+  background-size: contain;
+}
+input.yes[type="checkbox"]:checked ~ .answer--yes {
+  visibility: visible;
+  opacity: 100;
+}
+input.no[type="checkbox"]:checked ~ .answer--no {
+  visibility: visible;
+  opacity: 100;
+}
+.signature {
+  position: absolute;
+  margin: auto;
+  bottom: 0;
+  top: auto;
+  width: 95%;
+}
+.signature p {
+  text-align: center;
+  font-family: Helvetica, Arial, Sans-Serif;
+  font-size: 0.85em;
+  color: #ffffff;
+}
+.signature .much-heart {
+  display: inline-block;
+  position: relative;
+  margin: 0 4px;
+  height: 10px;
+  width: 10px;
+  background: #d8124b;
+  border-radius: 4px;
+  -ms-transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+.signature .much-heart::before,
+.signature .much-heart::after {
+  display: block;
+  content: "";
+  position: absolute;
+  margin: auto;
+  height: 10px;
+  width: 10px;
+  border-radius: 5px;
+  background: #d8124b;
+  top: -4px;
+}
+.signature .much-heart::after {
+  bottom: 0;
+  top: auto;
+  left: -4px;
+}
+.signature a {
+  color: #d8124b;
+  text-decoration: none;
+  font-weight: bold;
+}
+.signature a:hover {
+  color: coral;
+  text-decoration: none;
+  font-weight: bold;
+}
+</style>
+</html>
